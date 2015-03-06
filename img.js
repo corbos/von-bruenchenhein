@@ -63,20 +63,26 @@
                         row = Math.floor(index / width),
                         col = index % width,
                         c,
-                        baseIndex;
+                        baseIndex,
+                        widthOffset,
+                        heightOffset;
 
                     for (i = -1; i < 2; i++) {
-                        if (row + i >= 0 && row + i < height) {
-                            for (j = -1; j < 2; j++) {
-                                c = col + (j * 4);
-                                if (c >= 0 && c < width) {
-                                    baseIndex = index + (width * i) + (j * 4);
-                                    k = kernel[i + 1][j + 1];
-                                    red += (data[baseIndex] * k);
-                                    green += (data[baseIndex + 1] * k);
-                                    blue += (data[baseIndex + 2] * k);
-                                }
-                            }
+                        for (j = -1; j < 2; j++) {
+                            c = col + (j * 4);
+                            widthOffset = i;
+                            heightOffset = j;
+                            if (row + i < 0 || row + i >= height) {
+                                widthOffset = 0;
+                            }                                   
+                            if (c < 0 || c >= height) {
+                                heightOffset = 0;
+                            }                               
+                            baseIndex = index + (width * widthOffset) + (heightOffset * 4);
+                            k = kernel[i + 1][j + 1];
+                            red += (data[baseIndex] * k);
+                            green += (data[baseIndex + 1] * k);
+                            blue += (data[baseIndex + 2] * k);
                         }
                     }
 
@@ -130,14 +136,6 @@
                     data[i + 1] = Math.max(data[i + 1] - 25, 0);
                     data[i + 2] = Math.max(data[i + 2] - 25, 0);
                 });
-            },
-
-            identity: function () {
-                runKernel([
-                    [0.0, 0.0, 0.0],
-                    [0.0, 1.0, 0.0],
-                    [0.0, 0.0, 0.0]
-                ]);
             },
 
             sharpen: function () {
@@ -260,9 +258,11 @@
         endDrawing = function (e) {
             if (drawing) {
                 drawing = false;
+                points.length = 0;
                 download.href = canvas.toDataURL("image/jpeg", 0.8);
             }
-        };
+        },
+        points = [];
 
     img.onload = restore;
 
@@ -272,13 +272,14 @@
             img.src = reader.result;
         };
         reader.readAsDataURL(theFile.files[0]);
-    }, false);
+    }, false); 
 
     canvas.addEventListener("mousedown", function (e) {
         var x = e.clientX - this.offsetLeft + (window.pageXOffset||document.body.scrollLeft||document.documentElement.scrollLeft);
         var y = e.clientY - this.offsetTop + (window.pageYOffset||document.body.scrollTop||document.documentElement.scrollTop);
-        ctx.beginPath();
-        ctx.moveTo(x, y);
+        //ctx.beginPath();
+        //ctx.moveTo(x, y);
+        points.push({x:x, y:y});
         drawing = true;
     });
     canvas.addEventListener("mouseup", endDrawing);
@@ -287,7 +288,19 @@
         if (drawing) {
             var x = e.clientX - this.offsetLeft + (window.pageXOffset||document.body.scrollLeft||document.documentElement.scrollLeft);
             var y = e.clientY - this.offsetTop + (window.pageYOffset||document.body.scrollTop||document.documentElement.scrollTop);
-            ctx.lineTo(x, y);
+            //ctx.lineTo(x, y);
+            points.push({x:x, y:y});
+
+            ctx.lineWidth = 3;
+            ctx.lineJoin = ctx.lineCap = 'round';
+            ctx.shadowBlur = 3;
+            ctx.shadowColor = 'rgb(0, 0, 0)';
+
+            ctx.beginPath();
+            ctx.moveTo(points[0].x, points[0].y);
+            for (var i = 1; i < points.length; i++) {
+                ctx.lineTo(points[i].x, points[i].y);
+            }
             ctx.stroke();
         }
     });
