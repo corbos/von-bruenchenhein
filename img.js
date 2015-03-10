@@ -74,10 +74,10 @@
                             heightOffset = j;
                             if (row + i < 0 || row + i >= height) {
                                 widthOffset = 0;
-                            }                                   
+                            }
                             if (c < 0 || c >= height) {
                                 heightOffset = 0;
-                            }                               
+                            }
                             baseIndex = index + (width * widthOffset) + (heightOffset * 4);
                             k = kernel[i + 1][j + 1];
                             red += (data[baseIndex] * k);
@@ -272,7 +272,7 @@
             img.src = reader.result;
         };
         reader.readAsDataURL(theFile.files[0]);
-    }, false); 
+    }, false);
 
     canvas.addEventListener("mousedown", function (e) {
         var x = e.clientX - this.offsetLeft + (window.pageXOffset||document.body.scrollLeft||document.documentElement.scrollLeft);
@@ -291,10 +291,9 @@
             //ctx.lineTo(x, y);
             points.push({x:x, y:y});
 
-            ctx.lineWidth = 3;
             ctx.lineJoin = ctx.lineCap = 'round';
-            ctx.shadowBlur = 3;
-            ctx.shadowColor = 'rgb(0, 0, 0)';
+            //ctx.shadowBlur = 3;
+            //ctx.shadowColor = 'rgb(0, 0, 0)';
 
             ctx.beginPath();
             ctx.moveTo(points[0].x, points[0].y);
@@ -307,6 +306,13 @@
 
     ctx.fillStyle = '#fff';
     ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+    byId("txtLineWidth").addEventListener("change", function () {
+        ctx.lineWidth = parseInt(this.value, 10);
+    });
+    byId("txtStrokeStyle").addEventListener("change", function () {
+        ctx.strokeStyle = this.value;
+    });
 
     for (key in operations) {
         btn = document.createElement("button");

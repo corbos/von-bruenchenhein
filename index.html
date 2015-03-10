@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<title>Img</title>
+<meta content="text/html; charset=UTF-8" http-equiv="Content-Type" />
+<style>
+#divTools {
+    float:right;
+}
+#canvas {
+    border: 1px solid #000;
+    cursor: pointer;
+}
+.clear {
+    clear: both;
+}
+.txtLittle {
+    width: 50px;
+}
+</style>
+<body>
+<div id="divTools">
+    <h2>Drawing</h2>
+    <div>
+        <label for="txtLineWidth">Line Width</label>
+        <input type="text" id="txtLineWidth" class="txtLittle" />
+    </div>
+    <div>
+        <label for="txtStrokeStyle">Stroke Style</label>
+        <input type="text" id="txtStrokeStyle" class="txtLittle" />
+    </div>
+    <div>
+        <label for="ddlLineJoin">Line Join</label>
+        <select id="ddlLineJoin">
+            <option value="bevel">bevel</option>
+            <option value="round">round</option>
+            <option value="miter">miter</option>
+        </select>
+    </div>
+    <div>
+        <label for="ddlLineCap">Line Cap</label>
+        <select id="ddlLineCap">
+            <option value="butt">butt</option>
+            <option value="round">round</option>
+            <option value="square">square</option>
+        </select>
+    </div>
+    <div>
+        <label for="txtShadowBlur">Shadow Blur</label>
+        <input type="text" id="txtShadowBlur" class="txtLittle" />
+    </div>
+    <div>
+        <label for="txtShadowColor">Shadow Color</label>
+        <input type="text" id="txtShadowColor" class="txtLittle" />
+    </div>
+    <div>
+        <h4>Shadow Offset</h4>
+        <label for="txtShadowOffsetX">X</label>
+        <input type="text" id="txtShadowOffsetX" class="txtLittle" />
+        <label for="textShadowOffsetY">Y</label>
+        <input type="text" id="txtShadowOffsetY" class="txtLittle" />
+    </div>
+    <div>
+        <button id="btnClear">Clear</button>
+    </div>
+</div>
+<div id="divCanvas">
+    <canvas id="canvas" width="700" height="500"></canvas>
+</div>
+<div class="clear">
+    <a id="download" download="result.jpg">Download</a>
+</div>
+<script type="text/javascript" src="src/whatNext.js"></script>
+<script type="text/javascript" src="src/von-bruenchenhein.js"></script>
+<script type="text/javascript" src="src/index.js"></script>
+</body>
+</html>
+

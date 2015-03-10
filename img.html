@@ -8,6 +8,9 @@
     border: 1px solid #000;
     cursor: pointer;
 }
+#txtLineWidth {
+    width: 50px;
+}
 </style>
 <body>
 <div style="margin-bottom: 5px;">
@@ -15,8 +18,15 @@
 </div>
 <div id="buttons" style="margin-bottom: 15px;">
 </div>
+<div style="margin-bottom: 5px;">
+    <label for="txtLineWidth">Line Width</label>
+    <input type="text" id="txtLineWidth" value="1" />
+
+    <label for="txtStrokeStyle">Stroke Style</label>
+    <input type="text" id="txtStrokeStyle" value="#000" />
+</div>
 <div>
-    <canvas id="canvas" width="500" height="400"></canvas>
+    <canvas id="canvas" width="700" height="500"></canvas>
 </div>
 <div>
     <a id="download" download="result.jpg">Download</a>
