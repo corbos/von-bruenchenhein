@@ -1,4 +1,5 @@
 (function () {
+
     var app = new VonBruenchenhein('canvas'),
         txtLineWidth = document.getElementById('txtLineWidth'),
         txtStrokeStyle = document.getElementById('txtStrokeStyle'),
@@ -8,19 +9,28 @@
         txtShadowBlur = document.getElementById('txtShadowBlur'),
         txtShadowColor = document.getElementById('txtShadowColor'),
         txtShadowOffsetX = document.getElementById('txtShadowOffsetX'),
-        txtShadowOffsetY = document.getElementById('txtShadowOffsetY')
+        txtShadowOffsetY = document.getElementById('txtShadowOffsetY'),
+        download = document.getElementById('download')
     ;
+
+    whatNext.on('vbRendered', function (vb) {
+        download.href = vb.dataURL;
+    });
+    whatNext.on('colorChange', function (elem) {
+        if (elem === txtStrokeStyle) {
+            app.strokeStyle = elem.value;
+        }
+        else if (elem === txtShadowColor) {
+            app.shadowColor = elem.value;
+        }
+    });
 
     txtLineWidth.addEventListener('change', function () {
         var lineWidth = parseInt(this.value, 10);
         if (!isNaN(lineWidth) && lineWidth > 0) {
             app.lineWidth = lineWidth;
         }
-    });
-
-    txtStrokeStyle.addEventListener('change', function () {
-        app.strokeStyle = this.value;
-    });
+    });  
 
     btnClear.addEventListener('click', function () {
         app.clear();
@@ -41,10 +51,6 @@
         }
     });
 
-    txtShadowColor.addEventListener('change', function () {
-        app.shadowColor = this.value;
-    });
-
     txtShadowOffsetX.addEventListener('change', function () {
         var shadowOffsetX = parseInt(this.value, 10);
         if (!isNaN(shadowOffsetX) && shadowOffsetX >= 0) {
@@ -61,10 +67,12 @@
 
     txtLineWidth.value = app.lineWidth;
     txtStrokeStyle.value = app.strokeStyle;
+    whatNext.emit('colorChange', txtStrokeStyle);
     ddlLineJoin.value = app.lineJoin;
     ddlLineCap.value = app.lineCap;
     txtShadowBlur.value = app.shadowBlur;
     txtShadowColor.value = app.shadowColor;
+    whatNext.emit('colorChange', txtShadowColor);
     txtShadowOffsetX.value = app.shadowOffsetX;
     txtShadowOffsetY.value = app.shadowOffsetY;
 })();

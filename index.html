@@ -9,13 +9,15 @@
 }
 #canvas {
     border: 1px solid #000;
-    cursor: pointer;
 }
 .clear {
     clear: both;
 }
 .txtLittle {
     width: 50px;
+}
+canvas {
+    cursor: pointer;
 }
 </style>
 <body>
@@ -27,7 +29,7 @@
     </div>
     <div>
         <label for="txtStrokeStyle">Stroke Style</label>
-        <input type="text" id="txtStrokeStyle" class="txtLittle" />
+        <input type="text" id="txtStrokeStyle" class="txtLittle" data-colorpicker />
     </div>
     <div>
         <label for="ddlLineJoin">Line Join</label>
@@ -51,7 +53,7 @@
     </div>
     <div>
         <label for="txtShadowColor">Shadow Color</label>
-        <input type="text" id="txtShadowColor" class="txtLittle" />
+        <input type="text" id="txtShadowColor" class="txtLittle" data-colorpicker />
     </div>
     <div>
         <h4>Shadow Offset</h4>
@@ -72,6 +74,7 @@
 </div>
 <script type="text/javascript" src="src/whatNext.js"></script>
 <script type="text/javascript" src="src/von-bruenchenhein.js"></script>
+<script type="text/javascript" src="src/corbos.colorpicker.js"></script>
 <script type="text/javascript" src="src/index.js"></script>
 </body>
 </html>

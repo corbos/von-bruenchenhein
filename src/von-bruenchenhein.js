@@ -4,6 +4,7 @@ var VonBruenchenhein = function (canvasId) {
         throw "Canvas element '" + canvasId + "' was not found.";
     }
     this.ctx = this.canvas.getContext('2d');
+    this.clear();
     whatNext.emit('vbInit', this);
 };
 
@@ -17,6 +18,11 @@ VonBruenchenhein.prototype.mouseToPoint = function (e) {
 VonBruenchenhein.prototype.clear = function () {
     this.ctx.fillStyle = '#FFF';
     this.ctx.fillRect(0, 0, this.canvas.width, this.canvas.height);
+};
+
+VonBruenchenhein.prototype.rendered = function () {
+    this.dataURL = this.canvas.toDataURL("image/jpeg", 0.8);
+    whatNext.emit('vbRendered', this);
 };
 
 (function (VonBruenchenhein) {
@@ -41,10 +47,10 @@ VonBruenchenhein.prototype.clear = function () {
     VonBruenchenhein.prototype.initDrawing = function () {
         this.points = [];
         this.lineWidth = 5;
-        this.strokeStyle = '#000';
+        this.strokeStyle = '#000000';
         this.lineJoin = this.lineCap = 'round';
         this.shadowBlur = 0;
-        this.shadowColor = '#000';
+        this.shadowColor = '#000000';
         this.shadowOffsetX = this.shadowOffsetY = 0;
     };
 
@@ -66,6 +72,7 @@ VonBruenchenhein.prototype.clear = function () {
             this.drawLine();
             this.drawing = false;
             this.points.length = 0;
+            this.rendered();
         }
     };
     
