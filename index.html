@@ -16,6 +16,14 @@
 .txtLittle {
     width: 50px;
 }
+.noselect {
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
 canvas {
     cursor: pointer;
 }
@@ -25,7 +33,7 @@ canvas {
     <h2>Drawing</h2>
     <div>
         <label for="txtLineWidth">Line Width</label>
-        <input type="text" id="txtLineWidth" class="txtLittle" />
+        <input type="number" min="1" id="txtLineWidth" class="txtLittle" />
     </div>
     <div>
         <label for="txtStrokeStyle">Stroke Style</label>
@@ -49,7 +57,7 @@ canvas {
     </div>
     <div>
         <label for="txtShadowBlur">Shadow Blur</label>
-        <input type="text" id="txtShadowBlur" class="txtLittle" />
+        <input type="number" min="0" id="txtShadowBlur" class="txtLittle" />
     </div>
     <div>
         <label for="txtShadowColor">Shadow Color</label>
@@ -58,9 +66,9 @@ canvas {
     <div>
         <h4>Shadow Offset</h4>
         <label for="txtShadowOffsetX">X</label>
-        <input type="text" id="txtShadowOffsetX" class="txtLittle" />
+        <input type="number" min="0" id="txtShadowOffsetX" class="txtLittle" />
         <label for="textShadowOffsetY">Y</label>
-        <input type="text" id="txtShadowOffsetY" class="txtLittle" />
+        <input type="number" min="0" id="txtShadowOffsetY" class="txtLittle" />
     </div>
     <div>
         <button id="btnClear">Clear</button>
@@ -70,7 +78,7 @@ canvas {
     <canvas id="canvas" width="700" height="500"></canvas>
 </div>
 <div class="clear">
-    <a id="download" download="result.jpg">Download</a>
+    <a id="download" download="result.jpg" class="noselect">Download</a>
 </div>
 <script type="text/javascript" src="src/whatNext.js"></script>
 <script type="text/javascript" src="src/von-bruenchenhein.js"></script>

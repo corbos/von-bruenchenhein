@@ -33,12 +33,22 @@ VonBruenchenhein.prototype.rendered = function () {
         };
     },
 
+    mouseDown = false,
+
     init = function (vb) {
-        var stopDrawing = getHandler(vb, 'stopDrawing');
-        vb.canvas.addEventListener('mousedown', getHandler(vb, 'startDrawing'));
+
+        var stopDrawing = getHandler(vb, 'stopDrawing'),
+            startDrawing = getHandler(vb, 'startDrawing'); 
+
+        vb.canvas.addEventListener('mousedown', startDrawing);
         vb.canvas.addEventListener('mousemove', getHandler(vb, 'moveDrawing'));
         vb.canvas.addEventListener('mouseup', stopDrawing);
         vb.canvas.addEventListener('mouseout', stopDrawing);
+        vb.canvas.addEventListener('mouseover', function (e) {
+            if (mouseDown) {
+                startDrawing(e);
+            }
+        });
         vb.initDrawing();
     },
 
@@ -112,5 +122,8 @@ VonBruenchenhein.prototype.rendered = function () {
     };
 
     whatNext.on('vbInit', init);
+
+    window.addEventListener('mousedown', function (e) { mouseDown = true; });
+    window.addEventListener('mouseup', function (e) { mouseDown = false; });
 
 })(VonBruenchenhein);
