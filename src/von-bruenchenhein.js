@@ -15,6 +15,10 @@ VonBruenchenhein.prototype.mouseToPoint = function (e) {
     };
 };
 
+VonBruenchenhein.prototype.safeColor = function (val) {
+    return Math.max(Math.min(Math.round(val), 255), 0);
+};
+
 VonBruenchenhein.prototype.clear = function () {
     this.ctx.fillStyle = '#FFF';
     this.ctx.fillRect(0, 0, this.canvas.width, this.canvas.height);
@@ -23,6 +27,34 @@ VonBruenchenhein.prototype.clear = function () {
 VonBruenchenhein.prototype.rendered = function () {
     this.dataURL = this.canvas.toDataURL("image/jpeg", 0.8);
     whatNext.emit('vbRendered', this);
+};
+
+VonBruenchenhein.prototype.enlarge = function () {
+
+    var canvas = this.canvas,
+        ctx = this.ctx,
+        image = new Image();
+
+    image.onload = function () {
+        canvas.width = Math.round(image.width * 1.1);
+        canvas.height = Math.round(canvas.width * image.height / image.width);
+        ctx.drawImage(image, 0, 0, canvas.width, canvas.height);
+    };
+    image.src = canvas.toDataURL("image/jpeg", 1.0);
+},
+
+VonBruenchenhein.prototype.shrink = function () {
+
+    var canvas = this.canvas,
+        ctx = this.ctx,
+        image = new Image();
+
+    image.onload = function () {
+        canvas.width = Math.round(image.width * 0.9);
+        canvas.height = Math.round(canvas.width * image.height / image.width);
+        ctx.drawImage(image, 0, 0, canvas.width, canvas.height);
+    };
+    image.src = canvas.toDataURL("image/jpeg", 1.0);
 };
 
 (function (VonBruenchenhein) {

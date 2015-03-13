@@ -4,11 +4,15 @@
 <title>Img</title>
 <meta content="text/html; charset=UTF-8" http-equiv="Content-Type" />
 <style>
-#divTools {
-    float:right;
-}
 #canvas {
     border: 1px solid #000;
+}
+.right {
+    float:right;
+    margin-right: 10px;
+}
+.right > div {
+    margin-bottom: 5px;
 }
 .clear {
     clear: both;
@@ -29,19 +33,19 @@ canvas {
 }
 </style>
 <body>
-<div id="divTools">
-    <h2>Drawing</h2>
+<div class="right">
+    <h2>Painting</h2>
     <div>
         <label for="txtLineWidth">Line Width</label>
-        <input type="number" min="1" id="txtLineWidth" class="txtLittle" />
+        <input type="number" min="1" class="txtLittle" data-vb-property="lineWidth" />
     </div>
     <div>
         <label for="txtStrokeStyle">Stroke Style</label>
-        <input type="text" id="txtStrokeStyle" class="txtLittle" data-colorpicker />
+        <input type="text" class="txtLittle" data-colorpicker data-vb-property="strokeStyle" />
     </div>
     <div>
         <label for="ddlLineJoin">Line Join</label>
-        <select id="ddlLineJoin">
+        <select data-vb-property="lineJoin">
             <option value="bevel">bevel</option>
             <option value="round">round</option>
             <option value="miter">miter</option>
@@ -49,7 +53,7 @@ canvas {
     </div>
     <div>
         <label for="ddlLineCap">Line Cap</label>
-        <select id="ddlLineCap">
+        <select data-vb-property="lineCap">
             <option value="butt">butt</option>
             <option value="round">round</option>
             <option value="square">square</option>
@@ -57,21 +61,59 @@ canvas {
     </div>
     <div>
         <label for="txtShadowBlur">Shadow Blur</label>
-        <input type="number" min="0" id="txtShadowBlur" class="txtLittle" />
+        <input type="number" min="0" class="txtLittle" data-vb-property="shadowBlur" />
     </div>
     <div>
         <label for="txtShadowColor">Shadow Color</label>
-        <input type="text" id="txtShadowColor" class="txtLittle" data-colorpicker />
+        <input type="text" class="txtLittle" data-colorpicker data-vb-property="shadowColor" />
     </div>
     <div>
         <h4>Shadow Offset</h4>
         <label for="txtShadowOffsetX">X</label>
-        <input type="number" min="0" id="txtShadowOffsetX" class="txtLittle" />
+        <input type="number" class="txtLittle" data-vb-property="shadowOffsetX" />
         <label for="textShadowOffsetY">Y</label>
-        <input type="number" min="0" id="txtShadowOffsetY" class="txtLittle" />
+        <input type="number" class="txtLittle" data-vb-property="shadowOffsetY" />
     </div>
     <div>
-        <button id="btnClear">Clear</button>
+        <button data-vb-operation="clear">Clear</button>
+    </div>
+</div>
+<div class="right">
+    <h2>Photography</h2>
+    <div>
+        <input type="file" id="theFile" accept="image/x-png, image/gif, image/jpeg" />
+    </div>
+    <div>
+        <button data-vb-operation="redder">redder</button>
+        <button data-vb-operation="greener">greener</button>
+        <button data-vb-operation="bluer">bluer</button>
+    </div>
+    <div>
+        <button data-vb-operation="lighter">lighter</button>
+        <button data-vb-operation="darker">darker</button>
+        <button data-vb-operation="invert">invert</button>       
+    </div>
+    <div>
+        <button data-vb-operation="grayscale">grayscale</button>
+        <button data-vb-operation="blackAndWhite">blackAndWhite</button>
+    </div>
+    <div>
+        <button data-vb-operation="sharpen">sharpen</button>
+        <button data-vb-operation="blur">blur</button>
+        <button data-vb-operation="emboss">emboss</button>
+    </div>
+    <div>
+        <button data-vb-operation="outline">outline</button>
+        <button data-vb-operation="edge">edge</button>
+        <button data-vb-operation="sobelBottom">sobelBottom</button>
+        <button data-vb-operation="gradientHorizontal">gradientHorizontal</button>
+    </div>
+    <div>
+        <button data-vb-operation="enlarge">enlarge</button>
+        <button data-vb-operation="shrink">shrink</button>
+    </div>
+    <div>
+        <button data-vb-operation="restoreImage">Restore</button>
     </div>
 </div>
 <div id="divCanvas">
@@ -82,6 +124,7 @@ canvas {
 </div>
 <script type="text/javascript" src="src/whatNext.js"></script>
 <script type="text/javascript" src="src/von-bruenchenhein.js"></script>
+<script type="text/javascript" src="src/von-bruenchenhein.photography.js"></script>
 <script type="text/javascript" src="src/corbos.colorpicker.js"></script>
 <script type="text/javascript" src="src/index.js"></script>
 </body>
