@@ -1,66 +1,52 @@
-(function () {
+const download = document.getElementById('download');
+const app = new VonBruenchenhein('canvas', url => download.href = url);
+const theFile = document.getElementById('theFile');
 
-    var app = new VonBruenchenhein('canvas'),      
-        download = document.getElementById('download'),
-        theFile = document.getElementById('theFile'),      
-        btns,
-        propCtrls,
-        i,
-        ctrl,
-        handleOperation = function () {
-            app[this.getAttribute('data-vb-operation')]();
-        },
-        handleProp = function () {
+function handleOperation() {
+    app[this.getAttribute('data-vb-operation')]();
+}
 
-            var key = this.getAttribute('data-vb-property'),
-                n;
+function handleProp() {
 
-            if (typeof app[key] === "number") {
-                n = parseInt(this.value, 10);
-                if (!isNaN(n)) {
-                    app[key] = n;
-                }
-            } else {
-                app[key] = this.value;
-            }
+    const key = this.getAttribute('data-vb-property');
+
+    if (typeof app[key] === "number") {
+        const n = parseInt(this.value, 10);
+        if (!isNaN(n)) {
+            app[key] = n;
         }
-    ;
+    } else {
+        app[key] = this.value;
+    }
+}
 
-    whatNext.on('vbRendered', function (vb) {
-        download.href = vb.dataURL;
-    });
-    
-    whatNext.on('colorChange', function (elem) {
-        var key = elem.getAttribute('data-vb-property');
-        app[key] = elem.value;      
-    }); 
+whatNext.on('colorChange', function (elem) {
+    const key = elem.getAttribute('data-vb-property');
+    app[key] = elem.value;
+});
 
-    theFile.addEventListener("change", function () {
+theFile.addEventListener("change", function () {
 
-        if (theFile.files.length === 0) {
-            return;
-        }
-
-        var reader = new FileReader();
-        reader.onload = function () {
-            app.setImageSrc(reader.result);
-        };
-        reader.readAsDataURL(theFile.files[0]);
-    }, false);
-
-    btns = document.querySelectorAll('button[data-vb-operation]');
-    for (i = 0; i < btns.length; i++) {
-        btns[i].addEventListener('click', handleOperation);
+    if (theFile.files.length === 0) {
+        return;
     }
 
-    propCtrls = document.querySelectorAll('*[data-vb-property]');
-    for (i = 0; i < propCtrls.length; i++) {
-        ctrl = propCtrls[i];
-        ctrl.addEventListener('change', handleProp);
-        ctrl.value = app[ctrl.getAttribute('data-vb-property')]; 
-        if (typeof ctrl.getAttribute('data-colorpicker') === "string") {
-            whatNext.emit('colorChange', ctrl);
-        }       
-    } 
+    const reader = new FileReader();
+    reader.onload = function () {
+        app.setImageSrc(reader.result);
+    };
+    reader.readAsDataURL(theFile.files[0]);
 
-})();
+}, false);
+
+for (const btn of document.querySelectorAll('button[data-vb-operation]')) {
+    btn.addEventListener('click', handleOperation);
+}
+
+for (const ctrl of document.querySelectorAll('*[data-vb-property]')) {
+    ctrl.addEventListener('change', handleProp);
+    ctrl.value = app[ctrl.getAttribute('data-vb-property')];
+    if (typeof ctrl.getAttribute('data-colorpicker') === "string") {
+        whatNext.emit('colorChange', ctrl);
+    }
+}

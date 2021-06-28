@@ -1,4 +1,4 @@
-var whatNext = {
+const whatNext = {
 
     handlers: {},
 
@@ -13,14 +13,11 @@ var whatNext = {
     off: function (name, handler) {
     },
 
-    emit: function (name) {
-
-        var i,
-            args = [].slice.call(arguments, 1);
+    emit: function (name, ...args) {
 
         if (name in this.handlers) {
-            for (i = 0; i < this.handlers[name].length; i++) {
-                this.handlers[name][i].apply(null, args);
+            for (const handler of this.handlers[name]) {
+                handler.apply(null, args);
             }
         }
     }
